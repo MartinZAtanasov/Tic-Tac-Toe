@@ -1,0 +1,33 @@
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.x-mark {
+    width: 70%;
+    height: 70%;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.x-mark:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    background: red;
+}
+.x-mark:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: red;
+}
