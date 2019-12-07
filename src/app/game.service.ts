@@ -11,7 +11,7 @@ export class GameService {
 
   gameStatus = new BehaviorSubject({
     gameOn: false,
-    computerTurn: null,
+    computerTurn: true,
     turn: 1,
     boardBoxes: [
       {id: 1, markType: null},
@@ -26,19 +26,21 @@ export class GameService {
     ]
   });
 
-  markBox(index: number, markType: string) {
-    this.gameStatus.pipe(take(1)).subscribe( gameStatus => {
-
-      // Update the boxes
-      const boardBoxes = {...gameStatus}.boardBoxes;
-      boardBoxes[index - 1].markType = markType;
-
-      // Update the game status
-      this.gameStatus.next({
-        ...gameStatus,
-        boardBoxes
-      });
-
+  markBox(index: number, markType: string, computerTurn: boolean) {
+    const game = this.gameStatus.getValue();
+    // Update the boxes
+    const boardBoxes = {...game}.boardBoxes;
+    boardBoxes[index - 1].markType = markType;
+    // Update the game status
+    this.gameStatus.next({
+      ...game,
+      computerTurn: !computerTurn,
+      turn: game.turn += 1,
+      boardBoxes
     });
+  }
+
+  computerTurn() {
+    this.markBox(5, 'x', true);
   }
 }

@@ -7,13 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { BoxComponent } from './box/box.component';
 import { XMarkComponent } from './x-mark/x-mark.component';
+import { OMarkComponent } from './o-mark/o-mark.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
     BoxComponent,
-    XMarkComponent
+    XMarkComponent,
+    OMarkComponent
   ],
   imports: [
     BrowserModule,

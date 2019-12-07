@@ -1,3 +1,4 @@
+import { GameService } from './../game.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameBoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit() {
+    // Check if computer turn and mark mid
+    this.gameService.gameStatus.subscribe( game => {
+      if (game.computerTurn) {
+        this.gameService.computerTurn();
+      }
+    });
   }
-
 }

@@ -19,14 +19,12 @@ export class BoxComponent implements OnInit {
     this.gameService.gameStatus.subscribe( game => {
       const box = game.boardBoxes[this.index - 1];
       this.markedType = box.markType;
-      this.computerTurn = game.computerTurn;
-    })
+    });
   }
 
   onClick(): void {
     if (!this.markedType) {
-      this.gameService.markBox(this.index, 'x');
+      this.gameService.markBox(this.index, 'o', false);
     }
   }
-
 }
