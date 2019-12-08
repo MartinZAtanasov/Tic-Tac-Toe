@@ -11,11 +11,9 @@ export class GameBoardComponent implements OnInit {
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
-    // Check if computer turn and mark mid
-    this.gameService.gameStatus.subscribe( game => {
-      if (game.computerTurn) {
-        this.gameService.computerTurn();
-      }
-    });
+  }
+
+  onComputerStarts() {
+    this.gameService.computerTurn();
   }
 }

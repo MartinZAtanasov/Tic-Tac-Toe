@@ -25,6 +25,7 @@ export class BoxComponent implements OnInit {
   onClick(): void {
     if (!this.markedType) {
       this.gameService.markBox(this.index, 'o', false);
+      this.gameService.computerTurn();
     }
   }
 }
