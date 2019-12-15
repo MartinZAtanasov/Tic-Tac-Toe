@@ -118,5 +118,21 @@ export class GameService {
         }
       }
     }
+
+    if (game.turn === 7) {
+      let winCombinations = [
+        [1, 2, 3],
+        [3, 6, 9],
+        [7, 8, 9],
+        [1, 4, 7],
+        [1, 5, 9],
+        [3, 5, 7]
+      ];
+      winCombinations = winCombinations.filter( v =>
+        !(v.includes(game.playerTurns[0]) || v.includes(game.playerTurns[1]) || v.includes(game.playerTurns[2]))
+      );
+      const winMove = winCombinations[0].filter( v => !game.computerTurns.includes(v))[0];
+      this.markBox(winMove, 'x', true);
+    }
   }
 }
