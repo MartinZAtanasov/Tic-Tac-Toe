@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -53,15 +52,23 @@ export class GameService {
       this.gameStatus.next( {...game, strategy: 'center'});
       this.markBox(5, 'x', true);
     }
+    if (game.turn === 3) {
+      // Get the right strategy
+      const playerTurn = game.playerTurns[0];
+      if (this.middle.includes(playerTurn)) {
+        this.gameStatus.next( {...game, strategy: 'center-mid'});
+        this.centerMidTurn();
+      }
+    }
     switch (game.strategy) {
-      case 'center':
-        this.strategyTurn();
+      case 'center-mid':
+        this.centerMidTurn();
         break;
       default: break;
     }
   }
 
-  strategyTurn() {
+  centerMidTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 3) {
       /**Play center-mid strategy second move.
@@ -131,8 +138,11 @@ export class GameService {
       winCombinations = winCombinations.filter( v =>
         !(v.includes(game.playerTurns[0]) || v.includes(game.playerTurns[1]) || v.includes(game.playerTurns[2]))
       );
-      const winMove = winCombinations[0].filter( v => !game.computerTurns.includes(v))[0];
-      this.markBox(winMove, 'x', true);
+      console.log(game.playerTurns);
+      console.log(winCombinations);
+      console.log(game.computerTurns);
+      // const winMove = winCombinations[0].filter( v => !game.computerTurns.includes(v))[0];
+      // this.markBox(winMove, 'x', true);
     }
   }
 }
