@@ -138,11 +138,9 @@ export class GameService {
       winCombinations = winCombinations.filter( v =>
         !(v.includes(game.playerTurns[0]) || v.includes(game.playerTurns[1]) || v.includes(game.playerTurns[2]))
       );
-      console.log(game.playerTurns);
+      const computerTurns = game.computerTurns.sort();
       console.log(winCombinations);
       console.log(game.computerTurns);
-      // const winMove = winCombinations[0].filter( v => !game.computerTurns.includes(v))[0];
-      // this.markBox(winMove, 'x', true);
     }
   }
 }
