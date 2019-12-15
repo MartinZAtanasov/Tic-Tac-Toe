@@ -101,6 +101,20 @@ export class GameService {
           this.markBox(winMove, 'x', true);
         } else {
           // Place the chess mate move
+
+          // Get the corners and surrounding mids
+          let corners = [
+            [1, 2, 4],
+            [3, 2, 6],
+            [7, 4, 8],
+            [9, 8, 6]
+          ];
+          const playerCorner = game.playerTurns[1];
+          const playerFirstTurn = game.playerTurns[0];
+          const computerCorner = game.computerTurns[1];
+          corners = corners.filter(v => !v.includes(playerCorner) && !v.includes(computerCorner));
+          corners = corners.filter( v => !v.includes(playerFirstTurn));
+          this.markBox(corners[0][0], 'x', true);
         }
       }
     }
