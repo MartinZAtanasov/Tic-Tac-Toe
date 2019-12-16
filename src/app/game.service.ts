@@ -139,17 +139,24 @@ export class GameService {
       }
     }
   }
-
+  // WORKING ON HERE!
   centerCornerMidTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 5) {
       const playerWinMove = this.getWiningMark(this.winingCombinations, game.playerTurns);
-      this.markBox(playerWinMove, 'x', true);
+      if (playerWinMove) {
+        this.markBox(playerWinMove, 'x', true);
+      } else {
+        let surroundingCorners = [...this.surroundingCorners];
+        surroundingCorners = surroundingCorners.filter( v => !(v.includes(game.playerTurns[1]) || v.includes(game.playerTurns[0])) );
+        this.markBox(surroundingCorners[0][0], 'x', true);
+      }
     }
     if (game.turn === 7) {
       const winingCombinations = this.filterWinCombinations(game.playerTurns);
       const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
       this.markBox(winMove, 'x', true);
+      console.log('COMPUTER WINS');
     }
   }
 
@@ -189,6 +196,7 @@ export class GameService {
       const winMove = getRightCombination.filter( v => v !== secondMove)[0];
       if (!game.playerTurns.includes(winMove)) {
         this.markBox(winMove, 'x', true);
+        console.log('COMPUTER WINS');
       } else {
         // If user have marked the win box ->
 
@@ -219,6 +227,7 @@ export class GameService {
       );
       const winMove = this.getWiningMark(winCombinations, game.computerTurns);
       this.markBox(winMove, 'x', true);
+      console.log('COMPUTER WINS');
     }
   }
 
