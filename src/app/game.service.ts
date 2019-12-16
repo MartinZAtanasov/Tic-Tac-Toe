@@ -28,8 +28,22 @@ export class GameService {
   });
 
   corners = [1, 3, 7, 9];
-  middle = [2, 4, 6, 8];
+  middles = [2, 4, 6, 8];
   center = [5];
+  surroundingCorners = [
+    [1, 2, 4],
+    [3, 2, 6],
+    [7, 4, 8],
+    [9, 8, 6]
+  ]
+  winingCombinations = [
+    [1, 2, 3],
+    [3, 6, 9],
+    [7, 8, 9],
+    [1, 4, 7],
+    [1, 5, 9],
+    [3, 5, 7]
+  ];
 
   markBox(index: number, markType: string, computerTurn: boolean) {
     const game = this.gameStatus.getValue();
@@ -49,22 +63,71 @@ export class GameService {
   computerTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 1) {
-      this.gameStatus.next( {...game, strategy: 'center'});
       this.markBox(5, 'x', true);
     }
     if (game.turn === 3) {
-      // Get the right strategy
       const playerTurn = game.playerTurns[0];
-      if (this.middle.includes(playerTurn)) {
+      // Get the right strategy
+      if (this.middles.includes(playerTurn)) {
         this.gameStatus.next( {...game, strategy: 'center-mid'});
         this.centerMidTurn();
+      }
+      if (this.corners.includes(playerTurn)) {
+        this.gameStatus.next( {...game, strategy: 'center-corner'});
+        this.centerCornerTurn();
+      }
+    }
+    if (game.turn === 5) {
+      const isMiddle = this.middles.includes(game.playerTurns[1]);
+      if (isMiddle) {
+        this.gameStatus.next( {...game, strategy: 'center-corner-middle'});
+        this.centerCornerMidTurn();
       }
     }
     switch (game.strategy) {
       case 'center-mid':
         this.centerMidTurn();
         break;
+      case 'center-corner':
+        this.centerCornerTurn();
+        break;
+      case 'center-corner-middle':
+        this.centerCornerMidTurn();
+        break;
       default: break;
+    }
+  }
+
+  centerCornerMidTurn() {
+    const game = this.gameStatus.getValue();
+    if (game.turn === 5) {
+      const playerWinMove = this.getWiningMark(this.winingCombinations, game.playerTurns);
+      if (playerWinMove) {
+        this.markBox(playerWinMove, 'x', true);
+      } else {
+        // if player will not score
+      }
+    }
+
+    if (game.turn === 7) {
+      // Need to filter the array from player turns
+      let winingCombinations = [...this.winingCombinations];
+      const winMove = this.getWiningMark(this.winingCombinations, game.computerTurns);
+      console.log(winMove);
+      // this.markBox(winMove, 'x', true);
+    }
+  }
+
+  centerCornerTurn() {
+    const game = this.gameStatus.getValue();
+    if (game.turn === 3) {
+      let oppositeCorners = [
+        [1, 9],
+        [3, 7]
+      ];
+      oppositeCorners = oppositeCorners.filter( v => v.includes(game.playerTurns[0]));
+      const oppositeCornerBox = oppositeCorners[0].filter( v => v !== game.playerTurns[0])[0];
+      this.markBox(oppositeCornerBox, 'x', true);
     }
   }
 
@@ -94,53 +157,53 @@ export class GameService {
       } else {
         // If user have marked the win box ->
 
-        // Check if user is going to make a win with his next move
-        winingCombinations = [
-          [1, 2, 3],
-          [1, 4, 7],
-          [3, 6, 9],
-          [7, 8, 9]
-        ];
-        winingCombinations = winingCombinations.filter( v => v.includes(game.playerTurns[0]));
-        winingCombinations = winingCombinations.filter( v => v.includes(game.playerTurns[1]));
-        if (winingCombinations.length) {
-          winMove = winingCombinations[0].filter( v => !game.playerTurns.includes(v))[0];
-          this.markBox(winMove, 'x', true);
+        // Check if user is going to make a win with his next move and block it
+        winingCombinations = [...this.winingCombinations];
+        const playerWinMove = this.getWiningMark(winingCombinations, game.playerTurns);
+        if (playerWinMove) {
+          this.markBox(playerWinMove, 'x', true);
         } else {
           // Place the chess mate move
+          let surroundingCorners = [...this.surroundingCorners];
 
-          // Get the corners and surrounding mids
-          let corners = [
-            [1, 2, 4],
-            [3, 2, 6],
-            [7, 4, 8],
-            [9, 8, 6]
-          ];
+          // Get the right corner and mark it
           const playerCorner = game.playerTurns[1];
           const playerFirstTurn = game.playerTurns[0];
           const computerCorner = game.computerTurns[1];
-          corners = corners.filter(v => !v.includes(playerCorner) && !v.includes(computerCorner));
-          corners = corners.filter( v => !v.includes(playerFirstTurn));
-          this.markBox(corners[0][0], 'x', true);
+          surroundingCorners = surroundingCorners.filter(v => !v.includes(playerCorner) && !v.includes(computerCorner));
+          surroundingCorners = surroundingCorners.filter( v => !v.includes(playerFirstTurn));
+          this.markBox(surroundingCorners[0][0], 'x', true);
         }
       }
     }
 
     if (game.turn === 7) {
-      let winCombinations = [
-        [1, 2, 3],
-        [3, 6, 9],
-        [7, 8, 9],
-        [1, 4, 7],
-        [1, 5, 9],
-        [3, 5, 7]
-      ];
+      let winCombinations = [...this.winingCombinations];
       winCombinations = winCombinations.filter( v =>
         !(v.includes(game.playerTurns[0]) || v.includes(game.playerTurns[1]) || v.includes(game.playerTurns[2]))
       );
-      const computerTurns = game.computerTurns.sort();
-      console.log(winCombinations);
-      console.log(game.computerTurns);
+      let winMove = this.getWiningMark(winCombinations, game.computerTurns);
+      this.markBox(winMove, 'x', true);
     }
+  }
+
+  getWiningMark(winCombinations: number[][], turns: number[]): number {
+    turns = turns.sort();
+    let matches = 0;
+    let winComb = null;
+    for (let i=0; i < winCombinations.length; i++) {
+      winCombinations[i].forEach( value => {
+        turns.includes(value) ? matches++ : matches += 0;
+      })
+      if (matches === 2) {
+        winComb = winCombinations[i];
+        break;
+      } else {
+        matches = 0;
+        winComb = null;
+      }
+    }
+    let winMove = winComb ? winComb.filter( v => !turns.includes(v))[0] : 0;
+    return winMove;
   }
 }
