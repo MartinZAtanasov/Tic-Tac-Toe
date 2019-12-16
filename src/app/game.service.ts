@@ -139,7 +139,7 @@ export class GameService {
       }
     }
   }
-  // WORKING ON HERE!
+
   centerCornerMidTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 5) {
