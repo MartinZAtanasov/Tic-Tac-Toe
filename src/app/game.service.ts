@@ -70,33 +70,38 @@ export class GameService {
       if (computerTurn === 5) {
         if (this.middles.includes(playerTurn)) {
           this.gameStatus.next( {...game, strategy: 'center-mid'});
-          this.playStrategy();
+          // this.playStrategy();
         }
         if (this.corners.includes(playerTurn)) {
           this.gameStatus.next( {...game, strategy: 'center-corner'});
-          this.playStrategy();
+          // this.playStrategy();
         }
       }
       // Corner strategy
       if (this.corners.includes(computerTurn)) {
         if (this.corners.includes(playerTurn)) {
           this.gameStatus.next( {...game, strategy: 'corner-corner'});
-          this.playStrategy();
+          // this.playStrategy();
         }
         if (this.middles.includes(playerTurn)) {
           this.gameStatus.next( {...game, strategy: 'corner-mid'});
-          this.playStrategy();
+          // this.playStrategy();
         }
         if (playerTurn === 5) {
           this.gameStatus.next( {...game, strategy: 'corner-center'});
-          this.playStrategy();
+          // this.playStrategy();
         }
       }
       // Middle strategy
-      if (this.middles.includes(playerTurn)) {
-        this.gameStatus.next( {...game, strategy: 'mid-mid'});
-        this.playStrategy();
+      if (this.middles.includes(computerTurn)) {
+        if (this.middles.includes(playerTurn)) {
+          this.gameStatus.next( {...game, strategy: 'mid-mid'});
+        }
+        if (this.corners.includes(playerTurn)) {
+          this.gameStatus.next( {...game, strategy: 'mid-corner'});
+        }
       }
+      this.playStrategy();
     }
     if (game.turn === 5 ) {
       // Center strategy
@@ -104,12 +109,13 @@ export class GameService {
         const isMiddle = this.middles.includes(game.playerTurns[1]);
         if (isMiddle && game.strategy === 'center-corner') {
           this.gameStatus.next( {...game, strategy: 'center-corner-middle'});
-          this.playStrategy();
+          // this.playStrategy();
         }
         if (!isMiddle && game.strategy === 'center-corner') {
           this.gameStatus.next( {...game, strategy: 'center-corner-corner'});
-          this.playStrategy();
+          // this.playStrategy();
         }
+        this.playStrategy();
       }
     }
     if (game.turn > 5 || game.strategy === 'corner-corner' || 'corner-mid' || 'corner-center' || 'mid-mid') {
@@ -144,7 +150,74 @@ export class GameService {
       case 'mid-mid':
         this.midMidStrategy();
         break;
+      case 'mid-corner':
+        this.midCornerStrategy();
+        break;
       default: break;
+    }
+  }
+
+  midCornerStrategy() {
+    const game = this.gameStatus.getValue();
+    const playerMove = game.playerTurns[0];
+    const computerMove = game.computerTurns[0];
+    if (game.turn === 3) {
+      const surroundingCorners = this.surroundingCorners.filter( v => v.includes(playerMove) && !v.includes(computerMove));
+      if (surroundingCorners.length) {
+        // Far corner
+        const crossWiningCombinations = this.winingCombinations.filter( (_, i, arr) => i > arr.length - 3);
+        const crossCombination = crossWiningCombinations.filter( v => !v.includes(playerMove))[0];
+        let surroundingCorners2 = this.surroundingCorners.filter( v => v.includes(computerMove));
+        surroundingCorners2 = surroundingCorners2.filter( v => v.includes(crossCombination[0]) || v.includes(crossCombination[2]));
+        const cornerMove = surroundingCorners2[0][0];
+        this.markBox(cornerMove, 'x', true);
+      } else {
+        // Close corner
+        this.markBox(5, 'x', true);
+      }
+    }
+    if (game.turn === 5) {
+      const winingCombinations = this.filterWinCombinations(game.playerTurns);
+      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
+      if (winMove) {
+        this.markBox(winMove, 'x', true);
+        console.log('COMPUTER WINS');
+      } else {
+        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
+        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
+        if (winMove2) {
+          this.markBox(winMove2, 'x', true);
+        } else {
+          this.markBox(this.randomEmptyBox(true), 'x', true);
+        }
+      }
+    }
+    if (game.turn === 7) {
+      const winingCombinations = this.filterWinCombinations(game.playerTurns);
+      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
+      if (winMove) {
+        this.markBox(winMove, 'x', true);
+        console.log('COMPUTER WINS');
+      } else {
+        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
+        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
+        if (winMove2) {
+          this.markBox(winMove2, 'x', true);
+        } else {
+          this.markBox(this.randomEmptyBox(), 'x', true);
+        }
+      }
+    }
+    if (game.turn === 9) {
+      const winingCombinations = this.filterWinCombinations(game.playerTurns);
+      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
+      if (winMove) {
+        this.markBox(winMove, 'x', true);
+        console.log('COMPUTER WINS');
+      } else {
+        this.markBox(this.randomEmptyBox(), 'x', true);
+        console.log('DRAW');
+      }
     }
   }
 
