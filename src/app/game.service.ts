@@ -51,7 +51,6 @@ export class GameService {
     [3, 5, 7]
   ];
 
-
   computerTurn() {
     const game = this.gameStatus.getValue();
     const playerTurn = game.playerTurns[0];
@@ -160,6 +159,7 @@ export class GameService {
       default: break;
     }
   }
+
   midCenterStrategy() {
     const game = this.gameStatus.getValue();
     const computerMove = game.computerTurns[0];
@@ -173,11 +173,9 @@ export class GameService {
       this.markBox(corner, 'x', true);
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.computerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.playerTurns);
-      console.log(this.getWinMove(false));
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const playerWinMove = this.getWinMove(false);
+      if (playerWinMove) {
+        this.markBox(playerWinMove, 'x', true);
       } else {
         let surroundingCorners = this.surroundingCorners.filter( v => v.includes(computerMove));      
         const winingCombinations = this.filterWinCombinations(game.playerTurns).filter( v => 
@@ -189,16 +187,14 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
-        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
-        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
-        if (winMove2) {
-          this.markBox(winMove2, 'x', true);
+        const playerWinMove = this.getWinMove(false);
+        if (playerWinMove) {
+          this.markBox(playerWinMove, 'x', true);
         } else {
           if (this.middles.includes(playerMove)) {
             const corner = this.surroundingCorners.filter( v => v.includes(computerMove3) && v.includes(computerMove))[0][0];
@@ -210,10 +206,9 @@ export class GameService {
       }
     }
     if (game.turn === 9) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         this.markBox(this.randomEmptyBox(), 'x', true);
@@ -242,42 +237,37 @@ export class GameService {
       }
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
-        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
-        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
-        if (winMove2) {
-          this.markBox(winMove2, 'x', true);
+        const playerWinMove = this.getWinMove(false);
+        if (playerWinMove) {
+          this.markBox(playerWinMove, 'x', true);
         } else {
           this.markBox(this.randomEmptyBox(true), 'x', true);
         }
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
-        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
-        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
-        if (winMove2) {
-          this.markBox(winMove2, 'x', true);
+        const playerWinMove = this.getWinMove(false);
+        if (playerWinMove) {
+          this.markBox(playerWinMove, 'x', true);
         } else {
           this.markBox(this.randomEmptyBox(), 'x', true);
         }
       }
     }
     if (game.turn === 9) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         this.markBox(this.randomEmptyBox(), 'x', true);
@@ -292,10 +282,9 @@ export class GameService {
       this.markBox(5, 'x', true);
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         const playerMove1 = game.playerTurns[0];
@@ -304,13 +293,12 @@ export class GameService {
           const corner = this.surroundingCorners.filter( v => !v.includes(playerMove1) && !v.includes(playerMove2))[0][0];
           this.markBox(corner, 'x', true);
         } else {
-          const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
-          const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
-          if (winMove2) {
-            this.markBox(winMove2, 'x', true);
+          const playerWinMove = this.getWinMove(false);
+          if (playerWinMove) {
+            this.markBox(playerWinMove, 'x', true);
           } else {
-            const winingCombinations3 = this.filterWinCombinations(game.computerTurns);
-            const winComb = winingCombinations3.filter( v => v.includes(playerMove2))[0];
+            const winingCombinations = this.filterWinCombinations(game.computerTurns);
+            const winComb = winingCombinations.filter( v => v.includes(playerMove2))[0];
             const move = winComb.filter( v => v !== playerMove2 && this.corners.includes(v))[0];
             this.markBox(move, 'x', true);
           }
@@ -318,20 +306,18 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         this.markBox(this.randomEmptyBox(true), 'x', true);
       }
     }
     if (game.turn === 9) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         this.markBox(this.randomEmptyBox(), 'x', true);
@@ -351,15 +337,14 @@ export class GameService {
       this.markBox(item, 'x', true);
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.computerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.playerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const playerWinMove = this.getWinMove(false);
+      if (playerWinMove) {
+        this.markBox(playerWinMove, 'x', true);
       } else {
-        let winingCombinations2 = this.filterWinCombinations(game.playerTurns);
-        winingCombinations2 = winingCombinations2.filter( v => v.includes(computerFirstTurn));
-        if (winingCombinations2.length === 1) {
-          const box = winingCombinations2[0].filter( v => this.corners.includes(v) && v !== computerFirstTurn)[0];
+        let winingCombinations = this.filterWinCombinations(game.playerTurns);
+        winingCombinations = winingCombinations.filter( v => v.includes(computerFirstTurn));
+        if (winingCombinations.length === 1) {
+          const box = winingCombinations[0].filter( v => this.corners.includes(v) && v !== computerFirstTurn)[0];
           this.markBox(box, 'x', true);
         } else {
           const computerSecondMove = game.computerTurns[1];
@@ -370,22 +355,19 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
-        const winingCombinations2 = this.filterWinCombinations(game.computerTurns);
-        const winMove2 = this.getWiningMark(winingCombinations2, game.playerTurns);
-        winMove2 ? this.markBox(winMove2, 'x', true) : this.markBox(this.randomEmptyBox(), 'x', true);
+        const playerWinMove = this.getWinMove(false);
+        playerWinMove ? this.markBox(playerWinMove, 'x', true) : this.markBox(this.randomEmptyBox(), 'x', true);
       }
     }
     if (game.turn === 9) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         this.markBox(this.randomEmptyBox(), 'x', true);
@@ -400,10 +382,9 @@ export class GameService {
       this.markBox(5, 'x', true);
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.computerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.playerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const playerWinMove = this.getWinMove(false);
+      if (playerWinMove) {
+        this.markBox(playerWinMove, 'x', true);
       } else {
         const playerMove1 = game.playerTurns[0];
         const playerMove2 = game.playerTurns[1];
@@ -412,9 +393,8 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      this.markBox(computerWinMove, 'x', true);
       console.log('COMPUTER WINS');
     }
   }
@@ -427,10 +407,9 @@ export class GameService {
       this.markBox(item, 'x', true);
     }
     if (game.turn === 5) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         const corners = this.corners.filter( v => !game.computerTurns.includes(v) && !game.playerTurns.includes(v));
@@ -439,9 +418,8 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      this.markBox(computerWinMove, 'x', true);
       console.log('COMPUTER WINS');
     }
   }
@@ -449,15 +427,13 @@ export class GameService {
   centerCornerCornerTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 5) {
-      const winMove = this.getWiningMark(this.winingCombinations, game.playerTurns);
-      this.markBox(winMove, 'x', true);
+      const playerWinMove = this.getWinMove(false);
+      this.markBox(playerWinMove, 'x', true);
     }
     if (game.turn === 7) {
-      const winCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winCombinations, game.computerTurns);
-      // If a win move mark it, else mark random empty box
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         const emptyBox = this.randomEmptyBox(true);
@@ -465,11 +441,9 @@ export class GameService {
       }
     }
     if (game.turn === 9) {
-      const winCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winCombinations, game.computerTurns);
-      // If a win move mark it, else mark random empty box
-      if (winMove) {
-        this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      if (computerWinMove) {
+        this.markBox(computerWinMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
         const emptyBox = this.randomEmptyBox();
@@ -482,7 +456,7 @@ export class GameService {
   centerCornerMidTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 5) {
-      const playerWinMove = this.getWiningMark(this.winingCombinations, game.playerTurns);
+      const playerWinMove = this.getWinMove(false);
       if (playerWinMove) {
         this.markBox(playerWinMove, 'x', true);
       } else {
@@ -492,9 +466,8 @@ export class GameService {
       }
     }
     if (game.turn === 7) {
-      const winingCombinations = this.filterWinCombinations(game.playerTurns);
-      const winMove = this.getWiningMark(winingCombinations, game.computerTurns);
-      this.markBox(winMove, 'x', true);
+      const computerWinMove = this.getWinMove(true);
+      this.markBox(computerWinMove, 'x', true);
       console.log('COMPUTER WINS');
     }
   }
@@ -515,17 +488,10 @@ export class GameService {
   centerMidTurn() {
     const game = this.gameStatus.getValue();
     if (game.turn === 3) {
-      /**Play center-mid strategy second move.
-       * Mark a random corner box.
-       */
       const item = this.corners[Math.floor(Math.random() * this.corners.length)];
       this.markBox(item, 'x', true);
     }
-
     if (game.turn === 5) {
-      /**Next move can be a win.
-       * Find it and place it if the box is not marked by the player
-       */
       let winingCombinations = [
         [1, 9],
         [3, 7]
@@ -537,11 +503,8 @@ export class GameService {
         this.markBox(winMove, 'x', true);
         console.log('COMPUTER WINS');
       } else {
-        // If user have marked the win box ->
-
         // Check if user is going to make a win with his next move and block it
-        winingCombinations = [...this.winingCombinations];
-        const playerWinMove = this.getWiningMark(winingCombinations, game.playerTurns);
+        const playerWinMove = this.getWinMove(false);
         if (playerWinMove) {
           this.markBox(playerWinMove, 'x', true);
         } else {
@@ -558,7 +521,6 @@ export class GameService {
         }
       }
     }
-
     if (game.turn === 7) {
       let winCombinations = [...this.winingCombinations];
       winCombinations = winCombinations.filter( v =>
