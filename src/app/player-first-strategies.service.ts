@@ -26,9 +26,14 @@ export class PlayerFirstStrategiesService {
       if (playerMove === 5) {
         this.gameState.gameStatus.next( {...game, strategy: 'center'});
       } else {
-        const isCorner = this.gameState.corners.includes(playerMove2);
-        const strategy = isCorner ? 'corner-corner' : 'corner-mid';
-        this.gameState.gameStatus.next( {...game, strategy});
+        if (this.gameState.middles.includes(playerMove)) {
+          // Get the correct strategy (mid-corner / mid-mid)
+          console.log('middle strategy');
+        } else {
+          const isCorner = this.gameState.corners.includes(playerMove2);
+          const strategy = isCorner ? 'corner-corner' : 'corner-mid';
+          this.gameState.gameStatus.next( {...game, strategy});
+        }
       }
       this.playStrategy();
     }
@@ -67,17 +72,32 @@ export class PlayerFirstStrategiesService {
       }
     }
     if (game.turn === 6) {
-      if (playerWinMove) {
-        this.gameState.markBox(playerWinMove, 'o', true);
+      if (computerWinMove) {
+        this.gameState.markBox(computerWinMove, 'o', true);
+        console.log('COMPUTER WINS');
       } else {
-        const winComb = this.gameState.filterWinCombinations(game.playerTurns)[0];
-        const corner = winComb.filter( v => this.gameState.corners.includes(v) && v !== computerMove)[0];
-        const move = playerWinMove ? playerWinMove : corner;
-        this.gameState.markBox(move, 'o', true);
+        if (playerWinMove) {
+          this.gameState.markBox(playerWinMove, 'o', true);
+        } else {
+          const winComb = this.gameState.filterWinCombinations(game.playerTurns)[0];
+          const corner = winComb.filter( v => this.gameState.corners.includes(v) && v !== computerMove)[0];
+          const move = playerWinMove ? playerWinMove : corner;
+          this.gameState.markBox(move, 'o', true);
+        }
       }
     }
     if (game.turn === 8) {
-      // check the 3 variations
+      if (computerWinMove) {
+        this.gameState.markBox(computerWinMove, 'o', true);
+        console.log('COMPUTER WINS')
+      } else {
+        if (playerWinMove) {
+          this.gameState.markBox(playerWinMove, 'o', true);
+        } else {
+          this.gameState.markBox(this.gameState.randomEmptyBox(), 'o', true);
+        }
+        console.log('DRAW');
+      }
     }
   }
 
