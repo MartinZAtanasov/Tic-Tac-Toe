@@ -1,3 +1,5 @@
+import { GameStateService } from './../game-state.service';
+import { PlayerFirstStrategiesService } from './../player-first-strategies.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from '../game.service';
 
@@ -8,24 +10,41 @@ import { GameService } from '../game.service';
 })
 export class BoxComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  constructor(
+    private gameService: GameService,
+    private playerFirstStrategies: PlayerFirstStrategiesService,
+    private gameState: GameStateService
+  ) { }
 
   @Input() index: number;
-  computerTurn = false;
+  computerStarts: boolean;
   markedType: string;
 
 
   ngOnInit() {
-    this.gameService.gameStatus.subscribe( game => {
+    // this.gameService.gameStatus.subscribe( game => {
+    //   const box = game.boardBoxes[this.index - 1];
+    //   this.markedType = box.markType;
+    //   this.computerStarts = game.computerStarts;
+    // });
+    this.gameState.gameStatus.subscribe( game => {
       const box = game.boardBoxes[this.index - 1];
       this.markedType = box.markType;
+      this.computerStarts = game.computerStarts;
     });
   }
 
   onClick(): void {
     if (!this.markedType) {
-      this.gameService.markBox(this.index, 'o', false);
-      this.gameService.computerTurn();
+      const mark = this.computerStarts ? 'o' : 'x';
+      if (this.computerStarts) {
+        this.gameService.markBox(this.index, mark, false);
+        this.gameService.computerTurn();
+      } else {
+        // this.playerFirstStrategies.markBox(this.index, mark, false);
+        this.gameState.markBox(this.index, mark, false);
+        this.playerFirstStrategies.computerTurn();
+      }
     }
   }
 }

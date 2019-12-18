@@ -12,6 +12,7 @@ export class GameService {
     gameOn: false,
     turn: 1,
     strategy: null,
+    computerStarts: false,
     computerTurns: [],
     playerTurns: [],
     boardBoxes: [
@@ -56,7 +57,7 @@ export class GameService {
     const playerTurn = game.playerTurns[0];
     const computerTurn = game.computerTurns[0];
     if (game.turn === 1) {
-      const randomIndex = Math.floor(Math.random() * 3) + 1
+      const randomIndex = Math.floor(Math.random() * 3) + 1;
       if (randomIndex === 1) {
         this.markBox(5, 'x', true);
       }
@@ -177,10 +178,10 @@ export class GameService {
       if (playerWinMove) {
         this.markBox(playerWinMove, 'x', true);
       } else {
-        let surroundingCorners = this.surroundingCorners.filter( v => v.includes(computerMove));      
-        const winingCombinations = this.filterWinCombinations(game.playerTurns).filter( v => 
-          (v.includes(surroundingCorners[0][0]) && v.includes(computerMove2)) || 
-          (v.includes(surroundingCorners[1][0]) && v.includes(computerMove2))  
+        const surroundingCorners = this.surroundingCorners.filter( v => v.includes(computerMove));
+        const winingCombinations = this.filterWinCombinations(game.playerTurns).filter( v =>
+          (v.includes(surroundingCorners[0][0]) && v.includes(computerMove2)) ||
+          (v.includes(surroundingCorners[1][0]) && v.includes(computerMove2))
         );
         const corner = winingCombinations[0].filter( v => this.corners.includes(v) && v !== computerMove2)[0];
         this.markBox(corner, 'x', true);
@@ -492,7 +493,7 @@ export class GameService {
       this.markBox(item, 'x', true);
     }
     if (game.turn === 5) {
-      let winingCombinations = [
+      const winingCombinations = [
         [1, 9],
         [3, 7]
       ];
@@ -561,11 +562,23 @@ export class GameService {
     return winingCombinations;
   }
 
-  randomEmptyBox(isMiddle?: boolean): number {
+  getWinMove(forComputer: boolean): number {
+    const game = this.gameStatus.getValue();
+    const turns = forComputer ? game.computerTurns : game.playerTurns;
+    const oppositeTurns = forComputer ? game.playerTurns : game.computerTurns;
+    const winingCombinations = this.filterWinCombinations(oppositeTurns);
+    const winMove = this.getWiningMark(winingCombinations, turns);
+    return winMove;
+  }
+
+  randomEmptyBox(isMiddle?: boolean, isCorner?: boolean): number {
     const game = this.gameStatus.getValue();
     let boxes = game.boardBoxes.filter( v => !v.markType);
     if (isMiddle) {
       boxes = boxes.filter( v => this.middles.includes(v.id));
+    }
+    if (isCorner) {
+      boxes = boxes.filter( v => this.corners.includes(v.id));
     }
     const emptyBox = boxes[Math.floor(Math.random() * boxes.length)];
     return emptyBox.id;
@@ -573,26 +586,14 @@ export class GameService {
 
   markBox(index: number, markType: string, computerTurn: boolean) {
     const game = this.gameStatus.getValue();
-    // Update the boxes
     const boardBoxes = {...game}.boardBoxes;
     boardBoxes[index - 1].markType = markType;
-    // Update the played turns
     computerTurn ? game.computerTurns.push(index) : game.playerTurns.push(index);
-    // Update the game status
     this.gameStatus.next({
       ...game,
       turn: game.turn += 1,
       boardBoxes
     });
-  }
-
-  getWinMove(forComputer: boolean): number {
-    const game = this.gameStatus.getValue();
-    const turns = forComputer ? game.computerTurns : game.playerTurns;
-    const oppositeTurns = forComputer ? game.playerTurns : game.computerTurns;
-    const winingCombinations = this.filterWinCombinations(oppositeTurns);
-    const number = this.getWiningMark(winingCombinations, turns);
-    return number;
   }
 
 }
