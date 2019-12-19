@@ -15,7 +15,7 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 2px;
+    height: 5px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) rotate(-45deg);
@@ -25,9 +25,16 @@
     content: '';
     position: absolute;
     width: 100%;
-    height: 2px;
+    height: 5px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
     background: red;
+}
+
+.green::before {
+    background: green;
+}
+.green::after {
+    background: green;
 }

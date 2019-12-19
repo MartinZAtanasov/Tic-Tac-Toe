@@ -1,5 +1,7 @@
+import { GameStateService } from './../game-state.service';
 import { Component, OnInit } from '@angular/core';
 import { popMark } from '../animations';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-x-mark',
@@ -9,9 +11,12 @@ import { popMark } from '../animations';
 })
 export class XMarkComponent implements OnInit {
 
-  constructor() { }
+  constructor(private gameState: GameStateService) { }
+
+  game: Observable<any>;
 
   ngOnInit() {
+    this.game = this.gameState.gameStatus;
   }
 
 }

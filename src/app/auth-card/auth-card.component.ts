@@ -20,4 +20,8 @@ export class AuthCardComponent implements OnInit {
     this.fireAuth.auth.signInWithPopup(provider);
   }
 
+  guestLogin() {
+    this.fireAuth.auth.signInAnonymously();
+  }
+
 }
