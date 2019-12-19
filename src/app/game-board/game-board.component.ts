@@ -1,5 +1,6 @@
-import { GameService } from './../game.service';
 import { Component, OnInit } from '@angular/core';
+import { GameStateService } from '../game-state.service';
+import { ComputerFirstStrategiesService } from '../computer-first-strategies.service';
 
 @Component({
   selector: 'app-game-board',
@@ -8,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameBoardComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameState: GameStateService, private computerFirst: ComputerFirstStrategiesService) { }
 
   ngOnInit() {
   }
 
   onComputerStarts() {
-    this.gameService.computerTurn();
+    this.computerFirst.computerTurn();
+    const game = this.gameState.gameStatus.getValue();
+    this.gameState.gameStatus.next({...game, computerStarts: true});
   }
 }
