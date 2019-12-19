@@ -68,7 +68,7 @@ export class PlayerFirstStrategiesService {
     const computerWinMove = this.gameState.getWinMove(true);
     const playerWinMove = this.gameState.getWinMove(false);
     const playerMove = game.playerTurns[0];
-    const playerMove2 = game.playerTurns[1]; 
+    const playerMove2 = game.playerTurns[1];
     if (game.turn === 4) {
       const surroundingCorner = this.gameState.surroundingCorners.filter( v => v.includes(playerMove) && v.includes(playerMove2));
       const ranodmCorner = this.gameState.randomEmptyBox(false, true);
@@ -167,7 +167,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS')
+        console.log('COMPUTER WINS');
       } else {
         if (playerWinMove) {
           this.gameState.markBox(playerWinMove, 'o', true);

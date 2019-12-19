@@ -9,7 +9,7 @@ export class ComputerFirstStrategiesService {
   constructor(private gameState: GameStateService) { }
 
   computerTurn() {
-    const game = this.gameState.gameStatus.getValue()
+    const game = this.gameState.gameStatus.getValue();
     const playerTurn = game.playerTurns[0];
     const computerTurn = game.computerTurns[0];
     if (game.turn === 1) {
@@ -306,7 +306,9 @@ export class ComputerFirstStrategiesService {
         } else {
           const computerSecondMove = game.computerTurns[1];
           const playerSecondMove = game.playerTurns[1];
-          const surroundingCorners = this.gameState.surroundingCorners.filter( v => v.includes(computerSecondMove) && !v.includes(playerSecondMove));
+          const surroundingCorners = this.gameState.surroundingCorners.filter(
+            v => v.includes(computerSecondMove) && !v.includes(playerSecondMove)
+          );
           this.gameState.markBox(surroundingCorners[0][0], 'x', true);
         }
       }
@@ -318,7 +320,8 @@ export class ComputerFirstStrategiesService {
         console.log('COMPUTER WINS');
       } else {
         const playerWinMove = this.gameState.getWinMove(false);
-        playerWinMove ? this.gameState.markBox(playerWinMove, 'x', true) : this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
+        playerWinMove ?
+          this.gameState.markBox(playerWinMove, 'x', true) : this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
       }
     }
     if (game.turn === 9) {

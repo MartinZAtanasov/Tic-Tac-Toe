@@ -4,10 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
 import { GameBoardComponent } from './game-board/game-board.component';
 import { BoxComponent } from './box/box.component';
 import { XMarkComponent } from './x-mark/x-mark.component';
 import { OMarkComponent } from './o-mark/o-mark.component';
+import { environment } from 'src/environments/environment';
+import { AuthCardComponent } from './auth-card/auth-card.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +20,14 @@ import { OMarkComponent } from './o-mark/o-mark.component';
     GameBoardComponent,
     BoxComponent,
     XMarkComponent,
-    OMarkComponent
+    OMarkComponent,
+    AuthCardComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
