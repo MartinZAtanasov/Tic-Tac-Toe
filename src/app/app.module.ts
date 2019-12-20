@@ -13,6 +13,7 @@ import { XMarkComponent } from './x-mark/x-mark.component';
 import { OMarkComponent } from './o-mark/o-mark.component';
 import { environment } from 'src/environments/environment';
 import { AuthCardComponent } from './auth-card/auth-card.component';
+import { GameInfoComponent } from './game-info/game-info.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthCardComponent } from './auth-card/auth-card.component';
     BoxComponent,
     XMarkComponent,
     OMarkComponent,
-    AuthCardComponent
+    AuthCardComponent,
+    GameInfoComponent
   ],
   imports: [
     BrowserModule,

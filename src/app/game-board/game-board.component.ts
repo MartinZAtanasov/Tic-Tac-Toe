@@ -14,9 +14,9 @@ export class GameBoardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onComputerStarts() {
-    this.computerFirst.computerTurn();
-    const game = this.gameState.gameStatus.getValue();
-    this.gameState.gameStatus.next({...game, computerStarts: true});
-  }
+  // onComputerStarts() {
+  //   this.computerFirst.computerTurn();
+  //   const game = this.gameState.gameStatus.getValue();
+  //   this.gameState.gameStatus.next({...game, computerStarts: true});
+  // }
 }
