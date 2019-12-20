@@ -8,13 +8,15 @@ export class GameStateService {
 
   constructor() { }
 
-  gameStatus = new BehaviorSubject({
-    gameOn: false,
+  initState = {
+    // gameOn: false,
     turn: 1,
     strategy: null,
     computerStarts: false,
     computerTurns: [],
     playerTurns: [],
+    playerScore: 0,
+    computerScore: 0,
     boardBoxes: [
       {id: 1, markType: null},
       {id: 2, markType: null},
@@ -26,7 +28,14 @@ export class GameStateService {
       {id: 8, markType: null},
       {id: 9, markType: null},
     ]
-  });
+  }
+
+  gameStatus = new BehaviorSubject({
+    ...this.initState,
+    computerTurns: [...this.initState.computerTurns],
+    playerTurns: [...this.initState.playerTurns],
+    boardBoxes: [...this.initState.boardBoxes]
+  })
 
   corners = [1, 3, 7, 9];
   oppositeCorners = [
@@ -114,6 +123,19 @@ export class GameStateService {
     const winingCombinations = this.filterWinCombinations(oppositeTurns);
     const winMove = this.getWiningMark(winingCombinations, turns);
     return winMove;
+  }
+
+  nextRound(computerWins: boolean) {
+    const game = this.gameStatus.getValue();
+    if (computerWins) {
+      this.gameStatus.next({
+        ...this.initState,
+        computerTurns: [...this.initState.computerTurns],
+        playerTurns: [...this.initState.playerTurns],
+        boardBoxes: [...this.initState.boardBoxes]
+        // Update the game state
+      })
+    }
   }
 
 }

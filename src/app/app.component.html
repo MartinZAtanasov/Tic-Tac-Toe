@@ -1,4 +1,3 @@
-<div class="container">
-  <app-game-board *ngIf="(user | async)"></app-game-board>
-  <app-auth-card *ngIf="!(user | async)"></app-auth-card>
-</div>
+<app-game-info *ngIf="(user | async)"></app-game-info>
+<app-game-board *ngIf="(user | async)"></app-game-board>
+<app-auth-card *ngIf="!(user | async)"></app-auth-card>

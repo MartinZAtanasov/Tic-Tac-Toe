@@ -1,0 +1,19 @@
+.container {
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+}
+.mark {
+    color: green;
+}
+img {
+    width: 80px;
+    margin: 0px 40px;
+}
+.logo {
+    margin: 40px 0;
+}
+.logo h1 {
+    display: inline-flex;
+    align-items: center;
+}

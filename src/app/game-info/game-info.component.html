@@ -1,0 +1,19 @@
+<div class="container">
+    <h1>You play 
+        <span class="turn"> <u>{{ (game | async).computerFirst ? 'second' : 'first' }}</u> </span>
+            with -
+        <span class="mark"> {{ (game | async).computerFirst ? 'O' : 'X' }} </span>
+    </h1>
+
+    <div class="logo">
+        <h1>
+            <img src="assets/img/anonymous.png" alt="you-icon"> 
+            VS 
+            <img src="assets/img/robot-logo.png" alt="comp-icon">
+        </h1>
+    </div>
+
+    <div class="score">
+        <h1> {{ (game | async).playerScore }} : {{ (game | async).computerScore }} </h1>
+    </div>
+</div>
