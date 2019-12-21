@@ -147,7 +147,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const playerWinMove = this.gameState.getWinMove(false);
         if (playerWinMove) {
@@ -166,10 +166,10 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
-        console.log('DRAW');
+        this.gameState.endRound(false);
       }
     }
   }
@@ -197,7 +197,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const playerWinMove = this.gameState.getWinMove(false);
         if (playerWinMove) {
@@ -211,7 +211,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const playerWinMove = this.gameState.getWinMove(false);
         if (playerWinMove) {
@@ -225,10 +225,10 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
-        console.log('DRAW');
+        this.gameState.endRound(false);
       }
     }
   }
@@ -242,7 +242,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const playerMove1 = game.playerTurns[0];
         const playerMove2 = game.playerTurns[1];
@@ -266,7 +266,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(true), 'x', true);
       }
@@ -275,10 +275,10 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
-        console.log('DRAW');
+        this.gameState.endRound(false);
       }
     }
   }
@@ -317,7 +317,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const playerWinMove = this.gameState.getWinMove(false);
         playerWinMove ?
@@ -328,10 +328,10 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', true);
-        console.log('DRAW');
+        this.gameState.endRound(false);
       }
     }
   }
@@ -355,7 +355,7 @@ export class ComputerFirstStrategiesService {
     if (game.turn === 7) {
       const computerWinMove = this.gameState.getWinMove(true);
       this.gameState.markBox(computerWinMove, 'x', true);
-      console.log('COMPUTER WINS');
+      this.gameState.endRound(true);
     }
   }
 
@@ -370,7 +370,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const corners = this.gameState.corners.filter( v => !game.computerTurns.includes(v) && !game.playerTurns.includes(v));
         const item = corners[Math.floor(Math.random() * corners.length)];
@@ -380,7 +380,7 @@ export class ComputerFirstStrategiesService {
     if (game.turn === 7) {
       const computerWinMove = this.gameState.getWinMove(true);
       this.gameState.markBox(computerWinMove, 'x', true);
-      console.log('COMPUTER WINS');
+      this.gameState.endRound(true);
     }
   }
 
@@ -394,7 +394,7 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const emptyBox = this.gameState.randomEmptyBox(true);
         this.gameState.markBox(emptyBox, 'x', true);
@@ -404,11 +404,11 @@ export class ComputerFirstStrategiesService {
       const computerWinMove = this.gameState.getWinMove(true);
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         const emptyBox = this.gameState.randomEmptyBox();
         this.gameState.markBox(emptyBox, 'x', true);
-        console.log('DRAW');
+        this.gameState.endRound(false);
       }
     }
   }
@@ -428,7 +428,7 @@ export class ComputerFirstStrategiesService {
     if (game.turn === 7) {
       const computerWinMove = this.gameState.getWinMove(true);
       this.gameState.markBox(computerWinMove, 'x', true);
-      console.log('COMPUTER WINS');
+      this.gameState.endRound(true);
     }
   }
 
@@ -461,7 +461,7 @@ export class ComputerFirstStrategiesService {
       const winMove = getRightCombination.filter( v => v !== secondMove)[0];
       if (!game.playerTurns.includes(winMove)) {
         this.gameState.markBox(winMove, 'x', true);
-        console.log('COMPUTER WINS');
+        this.gameState.endRound(true);
       } else {
         // Check if user is going to make a win with his next move and block it
         const playerWinMove = this.gameState.getWinMove(false);
@@ -488,7 +488,7 @@ export class ComputerFirstStrategiesService {
       );
       const winMove = this.gameState.getWinMove(true);
       this.gameState.markBox(winMove, 'x', true);
-      console.log('COMPUTER WINS');
+      this.gameState.endRound(true);
     }
   }
 }

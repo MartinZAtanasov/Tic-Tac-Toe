@@ -78,7 +78,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 6) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         const move = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox(false, true);
         this.gameState.markBox(move, 'o', true);
@@ -87,10 +87,10 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         this.gameState.markBox(this.gameState.randomEmptyBox(), 'o', true);
-        console.log('DRAW');
+        this.endRound(false);
       }
     }
   }
@@ -105,7 +105,6 @@ export class PlayerFirstStrategiesService {
       if (playerWinMove) {
         this.gameState.markBox(playerWinMove, 'o', true);
       } else {
-        // get tricky angle
         const corners = this.gameState.winingCombinations
           .filter( v => !v.includes(5) && v.includes(playerMove))[0]
           .filter( v => this.gameState.corners.includes(v));
@@ -119,7 +118,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 6) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         this.gameState.markBox(playerWinMove, 'o', true);
       }
@@ -127,11 +126,11 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         const move = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox();
         this.gameState.markBox(move, 'o', true);
-        console.log('DRAW');
+        this.endRound(false);
       }
     }
   }
@@ -152,7 +151,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 6) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         if (playerWinMove) {
           this.gameState.markBox(playerWinMove, 'o', true);
@@ -167,14 +166,14 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         if (playerWinMove) {
           this.gameState.markBox(playerWinMove, 'o', true);
         } else {
           this.gameState.markBox(this.gameState.randomEmptyBox(), 'o', true);
         }
-        console.log('DRAW');
+        this.endRound(false);
       }
     }
   }
@@ -191,7 +190,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 6) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         const move2 = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox(true);
         this.gameState.markBox(move2, 'o', true);
@@ -200,10 +199,10 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         this.gameState.markBox(playerWinMove, 'o', true);
-        console.log('DRAW');
+        this.endRound(false);
       }
     }
   }
@@ -229,7 +228,7 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 6) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         this.gameState.markBox(playerWinMove, 'o', true);
       }
@@ -237,12 +236,22 @@ export class PlayerFirstStrategiesService {
     if (game.turn === 8) {
       if (computerWinMove) {
         this.gameState.markBox(computerWinMove, 'o', true);
-        console.log('COMPUTER WINS');
+        this.endRound(true);
       } else {
         const move = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox();
         this.gameState.markBox(move, 'o', true);
-        console.log('DRAW');
+        this.endRound(false);
       }
     }
+  }
+
+  endRound(computerScores: boolean) {
+    if (!computerScores) {
+      this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', false);
+    }
+    const message = computerScores ? 'Computer wins' : 'Draw';
+    console.log(message);
+
+    this.gameState.endRound(computerScores);
   }
 }

@@ -19,6 +19,7 @@ export class BoxComponent implements OnInit {
   @Input() index: number;
   computerStarts: boolean;
   markedType: string;
+  gameOn: boolean;
 
 
   ngOnInit() {
@@ -26,11 +27,12 @@ export class BoxComponent implements OnInit {
       const box = game.boardBoxes[this.index - 1];
       this.markedType = box.markType;
       this.computerStarts = game.computerStarts;
+      this.gameOn = game.gameOn;
     });
   }
 
   onClick(): void {
-    if (!this.markedType) {
+    if (this.gameOn && !this.markedType) {
       const mark = this.computerStarts ? 'o' : 'x';
       if (this.computerStarts) {
         this.gameState.markBox(this.index, mark, false);

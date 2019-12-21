@@ -9,7 +9,9 @@ export class GameStateService {
   constructor() { }
 
   initState = {
-    // gameOn: false,
+    gameOn: false,
+    computerWon: false,
+    round: 1,
     turn: 1,
     strategy: null,
     computerStarts: false,
@@ -28,14 +30,14 @@ export class GameStateService {
       {id: 8, markType: null},
       {id: 9, markType: null},
     ]
-  }
+  };
 
   gameStatus = new BehaviorSubject({
     ...this.initState,
-    computerTurns: [...this.initState.computerTurns],
-    playerTurns: [...this.initState.playerTurns],
-    boardBoxes: [...this.initState.boardBoxes]
-  })
+    computerTurns: [],
+    playerTurns: [],
+    boardBoxes: this.resetBoardBoxes()
+  });
 
   corners = [1, 3, 7, 9];
   oppositeCorners = [
@@ -75,6 +77,7 @@ export class GameStateService {
   }
 
   randomEmptyBox(isMiddle?: boolean, isCorner?: boolean): number {
+    console.log('trigger');
     const game = this.gameStatus.getValue();
     let boxes = game.boardBoxes.filter( v => !v.markType);
     if (isMiddle) {
@@ -125,17 +128,37 @@ export class GameStateService {
     return winMove;
   }
 
-  nextRound(computerWins: boolean) {
+  endRound(computerWon: boolean) {
     const game = this.gameStatus.getValue();
-    if (computerWins) {
-      this.gameStatus.next({
-        ...this.initState,
-        computerTurns: [...this.initState.computerTurns],
-        playerTurns: [...this.initState.playerTurns],
-        boardBoxes: [...this.initState.boardBoxes]
-        // Update the game state
-      })
-    }
+    this.gameStatus.next({
+      ...game,
+      gameOn: false,
+      strategy: null,
+      computerWon,
+      computerScore: game.computerScore + 1,
+      playerScore: computerWon ? game.playerScore  : game.playerScore + 1,
+    });
+  }
+
+  resetBoard(computerWon: boolean) {
+    const game = this.gameStatus.getValue();
+    this.gameStatus.next({
+      ...game,
+      gameOn: true,
+      computerWon: null,
+      turn: 1,
+      round: game.round + 1,
+      boardBoxes: this.resetBoardBoxes(),
+      computerTurns: [],
+      playerTurns: [],
+      computerStarts: !game.computerStarts,
+    });
+  }
+
+  resetBoardBoxes(): any[] {
+    const boardBoxes = [];
+    [...this.initState.boardBoxes].forEach( v => boardBoxes.push({...v}));
+    return boardBoxes;
   }
 
 }

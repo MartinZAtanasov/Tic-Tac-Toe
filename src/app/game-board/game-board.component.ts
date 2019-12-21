@@ -1,3 +1,4 @@
+import { PlayerFirstStrategiesService } from './../player-first-strategies.service';
 import { Component, OnInit } from '@angular/core';
 import { GameStateService } from '../game-state.service';
 import { ComputerFirstStrategiesService } from '../computer-first-strategies.service';
@@ -9,14 +10,8 @@ import { ComputerFirstStrategiesService } from '../computer-first-strategies.ser
 })
 export class GameBoardComponent implements OnInit {
 
-  constructor(private gameState: GameStateService, private computerFirst: ComputerFirstStrategiesService) { }
+  constructor() { }
 
   ngOnInit() {
   }
-
-  // onComputerStarts() {
-  //   this.computerFirst.computerTurn();
-  //   const game = this.gameState.gameStatus.getValue();
-  //   this.gameState.gameStatus.next({...game, computerStarts: true});
-  // }
 }

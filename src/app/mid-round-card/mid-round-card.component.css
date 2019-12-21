@@ -1,0 +1,33 @@
+.mark {
+    color: green;
+}
+h1 {
+    text-align: center;
+}
+h2 {
+    margin: 15px 0;
+}
+h2 span {
+    font-size: 18px;
+    margin-left: 10px;
+}
+h2 b {
+    color: green;
+}
+.row {
+    display: flex;
+}
+.col-1 {
+    width: 60%;
+}
+.col-2 {
+    width: 40%;
+}
+
+@media only screen and (max-width: 1100px) {
+    .col-1 { width: 100% }
+    .col-2 { width: 100% }
+    .row {
+        flex-direction: column;
+    }
+}

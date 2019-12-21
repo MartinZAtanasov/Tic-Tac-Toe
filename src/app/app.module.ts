@@ -14,6 +14,9 @@ import { OMarkComponent } from './o-mark/o-mark.component';
 import { environment } from 'src/environments/environment';
 import { AuthCardComponent } from './auth-card/auth-card.component';
 import { GameInfoComponent } from './game-info/game-info.component';
+import { MidRoundCardComponent } from './mid-round-card/mid-round-card.component';
+import { MiniBoardComponent } from './mini-board/mini-board.component';
+import { MiniBoxComponent } from './mini-box/mini-box.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { GameInfoComponent } from './game-info/game-info.component';
     XMarkComponent,
     OMarkComponent,
     AuthCardComponent,
-    GameInfoComponent
+    GameInfoComponent,
+    MidRoundCardComponent,
+    MiniBoardComponent,
+    MiniBoxComponent
   ],
   imports: [
     BrowserModule,
