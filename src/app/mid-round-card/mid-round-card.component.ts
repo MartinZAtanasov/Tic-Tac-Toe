@@ -2,6 +2,7 @@ import { ComputerFirstStrategiesService } from './../computer-first-strategies.s
 import { GameStateService } from './../game-state.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-mid-round-card',
@@ -10,12 +11,19 @@ import { Subscription } from 'rxjs';
 })
 export class MidRoundCardComponent implements OnInit, OnDestroy {
 
-  constructor(private gameState: GameStateService, private computerFirst: ComputerFirstStrategiesService) { }
+  constructor(
+    private gameState: GameStateService,
+    private computerFirst: ComputerFirstStrategiesService,
+    private fireBase: FirebaseService
+  ) { }
 
   computerWon: boolean;
   computerStarts: boolean;
   game: any;
   subscription: Subscription;
+
+  savingResult = false;
+  deletingResult = false;
 
   ngOnInit() {
     this.subscription = this.gameState.gameStatus.subscribe( game => {
@@ -35,6 +43,32 @@ export class MidRoundCardComponent implements OnInit, OnDestroy {
     if (this.computerStarts) {
       setTimeout( () => this.computerFirst.computerTurn(), 0);
     }
+  }
+
+  saveResult() {
+    this.savingResult = true;
+    this.fireBase.saveResult().subscribe( res => {
+      res
+      .then( () => this.savingResult = false)
+      .catch( (err) => {
+        this.savingResult = false;
+        alert('Something went wrong: ' + err);
+      });
+    });
+  }
+
+  deleteResult() {
+    this.deletingResult = true;
+    this.fireBase.deleteResult().subscribe( promises => {
+      if (promises) {
+        promises
+        .then( () => this.deletingResult = false)
+        .catch( (err) => {
+          this.deletingResult = false;
+          alert('Something went wrong: ' + err);
+        })
+      }
+    });
   }
 
   ngOnDestroy() {

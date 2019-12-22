@@ -22,16 +22,16 @@ export class PlayerFirstStrategiesService {
     }
     if (game.turn === 4) {
       if (playerMove === 5) {
-        this.gameState.gameStatus.next( {...game, strategy: 'center'});
+        this.gameState.gameStatus.next({ ...game, strategy: 'center' });
       } else {
         if (this.gameState.middles.includes(playerMove)) {
           const isMiddle = this.gameState.middles.includes(playerMove2);
           const strategy = isMiddle ? 'mid-mid' : 'mid-corner';
-          this.gameState.gameStatus.next( {...game, strategy});
+          this.gameState.gameStatus.next({ ...game, strategy });
         } else {
           const isCorner = this.gameState.corners.includes(playerMove2);
           const strategy = isCorner ? 'corner-corner' : 'corner-mid';
-          this.gameState.gameStatus.next( {...game, strategy});
+          this.gameState.gameStatus.next({ ...game, strategy });
         }
       }
       this.playStrategy();
@@ -59,7 +59,7 @@ export class PlayerFirstStrategiesService {
       case 'mid-corner':
         this.midCornerStrategy();
         break;
-        default: break;
+      default: break;
     }
   }
 
@@ -70,7 +70,7 @@ export class PlayerFirstStrategiesService {
     const playerMove = game.playerTurns[0];
     const playerMove2 = game.playerTurns[1];
     if (game.turn === 4) {
-      const surroundingCorner = this.gameState.surroundingCorners.filter( v => v.includes(playerMove) && v.includes(playerMove2));
+      const surroundingCorner = this.gameState.surroundingCorners.filter(v => v.includes(playerMove) && v.includes(playerMove2));
       const ranodmCorner = this.gameState.randomEmptyBox(false, true);
       const move = surroundingCorner.length ? surroundingCorner[0][0] : ranodmCorner;
       this.gameState.markBox(move, 'o', true);
@@ -89,7 +89,8 @@ export class PlayerFirstStrategiesService {
         this.gameState.markBox(computerWinMove, 'o', true);
         this.endRound(true);
       } else {
-        this.gameState.markBox(this.gameState.randomEmptyBox(), 'o', true);
+        const move = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox();
+        this.gameState.markBox(move, 'o', true);
         this.endRound(false);
       }
     }
@@ -106,11 +107,11 @@ export class PlayerFirstStrategiesService {
         this.gameState.markBox(playerWinMove, 'o', true);
       } else {
         const corners = this.gameState.winingCombinations
-          .filter( v => !v.includes(5) && v.includes(playerMove))[0]
-          .filter( v => this.gameState.corners.includes(v));
+          .filter(v => !v.includes(5) && v.includes(playerMove))[0]
+          .filter(v => this.gameState.corners.includes(v));
         const winingCombinations = this.gameState.filterWinCombinations(game.computerTurns)
-          .filter( v => v.includes(playerMove2));
-        const option1 = winingCombinations.filter( v => v.includes(corners[0]));
+          .filter(v => v.includes(playerMove2));
+        const option1 = winingCombinations.filter(v => v.includes(corners[0]));
         const move = option1.length ? corners[0] : corners[1];
         this.gameState.markBox(move, 'o', true);
       }
@@ -157,7 +158,7 @@ export class PlayerFirstStrategiesService {
           this.gameState.markBox(playerWinMove, 'o', true);
         } else {
           const winComb = this.gameState.filterWinCombinations(game.playerTurns)[0];
-          const corner = winComb.filter( v => this.gameState.corners.includes(v) && v !== computerMove)[0];
+          const corner = winComb.filter(v => this.gameState.corners.includes(v) && v !== computerMove)[0];
           const move = playerWinMove ? playerWinMove : corner;
           this.gameState.markBox(move, 'o', true);
         }
@@ -168,11 +169,8 @@ export class PlayerFirstStrategiesService {
         this.gameState.markBox(computerWinMove, 'o', true);
         this.endRound(true);
       } else {
-        if (playerWinMove) {
-          this.gameState.markBox(playerWinMove, 'o', true);
-        } else {
-          this.gameState.markBox(this.gameState.randomEmptyBox(), 'o', true);
-        }
+        const move = playerWinMove ? playerWinMove : this.gameState.randomEmptyBox();
+        this.gameState.markBox(move, 'o', true);
         this.endRound(false);
       }
     }
@@ -217,11 +215,11 @@ export class PlayerFirstStrategiesService {
       if (playerWinMove) {
         this.gameState.markBox(playerWinMove, 'o', true);
       } else {
-        const crossWinCombinations = this.gameState.winingCombinations.filter( (_, i, arr) => i > arr.length - 3);
-        const crossWinComb = crossWinCombinations.filter( v => v.includes(playerMove) && v.includes(5))[0];
-        const corner = crossWinComb.filter( v => v !== 5 && v !== playerMove)[0];
-        const winComb = this.gameState.winingCombinations.filter( v => v.includes(corner) && v.includes(playerMove2));
-        const move = winComb[0].filter( v => v !== corner && v !== playerMove2)[0];
+        const crossWinCombinations = this.gameState.winingCombinations.filter((_, i, arr) => i > arr.length - 3);
+        const crossWinComb = crossWinCombinations.filter(v => v.includes(playerMove) && v.includes(5))[0];
+        const corner = crossWinComb.filter(v => v !== 5 && v !== playerMove)[0];
+        const winComb = this.gameState.winingCombinations.filter(v => v.includes(corner) && v.includes(playerMove2));
+        const move = winComb[0].filter(v => v !== corner && v !== playerMove2)[0];
         this.gameState.markBox(move, 'o', true);
       }
     }

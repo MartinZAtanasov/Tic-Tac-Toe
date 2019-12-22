@@ -51,13 +51,15 @@
                 Next Round
             </button>
 
-            <!-- <button>
-                Finish and save my result
-            </button>
-
-            <button>
-                Finish and delete my account
-            </button> -->
+            <div class="user-options" *ngIf="game.computerScore">
+                <button (click)="saveResult()" [disabled]="savingResult || deletingResult">
+                    Finish and save my result <app-btn-spinner *ngIf="savingResult"></app-btn-spinner>
+                </button>
+    
+                <button (click)="deleteResult()" [disabled]="savingResult || deletingResult">
+                    Finish and delete my account <app-btn-spinner *ngIf="deletingResult"></app-btn-spinner>
+                </button>
+            </div>
       </div>  
     </div>
 </div>

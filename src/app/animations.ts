@@ -1,4 +1,4 @@
-import { query, style, animate, group, transition, trigger, keyframes } from '@angular/animations';
+import { query, style, animate, transition, trigger, keyframes } from '@angular/animations';
 
 
 export const popMark = trigger('popMark', [

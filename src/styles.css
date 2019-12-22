@@ -37,6 +37,9 @@ button {
     padding: 2px 5px;
     letter-spacing: 2px;
 }
+button:focus {
+    outline: none;
+}
 
 @media only screen and (max-width: 1450px) {
     .modal-container {
