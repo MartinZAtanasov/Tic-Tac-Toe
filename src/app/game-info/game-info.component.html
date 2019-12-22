@@ -2,7 +2,7 @@
     
     <div class="logo">
         <h1>
-            <img src="assets/img/anonymous.png" alt="you-icon"> 
+            <img [src]="(token | async)?.claims.picture ? (token | async)?.claims.picture : 'assets/img/anonymous.png'" alt="you-icon"> 
             VS 
             <img src="assets/img/robot-logo.png" alt="comp-icon">
         </h1>

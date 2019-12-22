@@ -19,6 +19,9 @@ h2 b {
 }
 .col-1 {
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .col-2 {
     width: 40%;

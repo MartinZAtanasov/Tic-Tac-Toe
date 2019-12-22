@@ -38,26 +38,30 @@ export class MiniBoardComponent implements OnInit, OnDestroy {
     for (let i = 0; i < length; i++) {
       if (!this.computerStarts) {
         setTimeout( () => {
-          this.miniBoard[this.playerTurns[i] - 1].markType = 'x';
+          if (this.miniBoard[this.playerTurns[i] - 1]) {
+            this.miniBoard[this.playerTurns[i] - 1].markType = 'x';
+          }
         }, time * 500);
         time++;
-        if (this.miniBoard[this.computerTurns[i] - 1]) {
-          setTimeout( () => {
+        setTimeout( () => {
+          if (this.miniBoard[this.computerTurns[i] - 1]) {
             this.miniBoard[this.computerTurns[i] - 1].markType = 'o';
-          }, time * 500);
-          time++;
-        }
+          }
+        }, time * 500);
+        time++;
       } else {
         setTimeout( () => {
-          this.miniBoard[this.computerTurns[i] - 1].markType = 'x';
+          if (this.miniBoard[this.computerTurns[i] - 1]) {
+            this.miniBoard[this.computerTurns[i] - 1].markType = 'x';
+          }
         }, time * 500);
         time++;
-        if (this.miniBoard[this.playerTurns[i] - 1]) {
-          setTimeout( () => {
+        setTimeout( () => {
+          if (this.miniBoard[this.playerTurns[i] - 1]) {
             this.miniBoard[this.playerTurns[i] - 1].markType = 'o';
-          }, time * 500);
-          time++;
-        }
+          }
+        }, time * 500);
+        time++;
       }
     }
   }

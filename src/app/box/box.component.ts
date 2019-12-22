@@ -1,14 +1,15 @@
 import { GameStateService } from './../game-state.service';
 import { PlayerFirstStrategiesService } from './../player-first-strategies.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ComputerFirstStrategiesService } from '../computer-first-strategies.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-box',
   templateUrl: './box.component.html',
   styleUrls: ['./box.component.css'],
 })
-export class BoxComponent implements OnInit {
+export class BoxComponent implements OnInit, OnDestroy {
 
   constructor(
     private playerFirst: PlayerFirstStrategiesService,
@@ -20,10 +21,11 @@ export class BoxComponent implements OnInit {
   computerStarts: boolean;
   markedType: string;
   gameOn: boolean;
+  subscription: Subscription;
 
 
   ngOnInit() {
-    this.gameState.gameStatus.subscribe( game => {
+    this.subscription = this.gameState.gameStatus.subscribe( game => {
       const box = game.boardBoxes[this.index - 1];
       this.markedType = box.markType;
       this.computerStarts = game.computerStarts;
@@ -42,5 +44,9 @@ export class BoxComponent implements OnInit {
         this.playerFirst.computerTurn();
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

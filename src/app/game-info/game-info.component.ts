@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameStateService } from '../game-state.service';
@@ -9,12 +10,14 @@ import { GameStateService } from '../game-state.service';
 })
 export class GameInfoComponent implements OnInit {
 
-  constructor(private gameState: GameStateService) { }
+  constructor(private gameState: GameStateService, private fireAuth: AngularFireAuth) { }
 
   game: Observable<any>;
+  token: Observable<firebase.auth.IdTokenResult>;
 
   ngOnInit() {
     this.game = this.gameState.gameStatus;
+    this.token = this.fireAuth.idTokenResult;
   }
 
 }

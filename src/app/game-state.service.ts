@@ -77,7 +77,6 @@ export class GameStateService {
   }
 
   randomEmptyBox(isMiddle?: boolean, isCorner?: boolean): number {
-    console.log('trigger');
     const game = this.gameStatus.getValue();
     let boxes = game.boardBoxes.filter( v => !v.markType);
     if (isMiddle) {

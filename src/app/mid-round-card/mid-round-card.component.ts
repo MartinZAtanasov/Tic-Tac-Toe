@@ -1,12 +1,12 @@
 import { ComputerFirstStrategiesService } from './../computer-first-strategies.service';
 import { GameStateService } from './../game-state.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mid-round-card',
   templateUrl: './mid-round-card.component.html',
-  styleUrls: ['./mid-round-card.component.css']
+  styleUrls: ['./mid-round-card.component.css'],
 })
 export class MidRoundCardComponent implements OnInit, OnDestroy {
 

@@ -249,9 +249,6 @@ export class PlayerFirstStrategiesService {
     if (!computerScores) {
       this.gameState.markBox(this.gameState.randomEmptyBox(), 'x', false);
     }
-    const message = computerScores ? 'Computer wins' : 'Draw';
-    console.log(message);
-
     this.gameState.endRound(computerScores);
   }
 }

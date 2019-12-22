@@ -17,3 +17,6 @@ img {
     display: inline-flex;
     align-items: center;
 }
+img {
+    border-radius: 50%;
+}

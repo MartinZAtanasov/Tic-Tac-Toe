@@ -1,4 +1,4 @@
-<app-game-info *ngIf="(user | async)"></app-game-info>
+<app-game-info *ngIf="(user | async)" ></app-game-info>
 <app-game-board *ngIf="(user | async)"></app-game-board>
 <app-auth-card *ngIf="!(user | async)"></app-auth-card>
-<app-mid-round-card *ngIf="!(game | async).gameOn && (user | async)"></app-mid-round-card>
+<app-mid-round-card *ngIf="!(game | async).gameOn && (user | async)" @modalPop></app-mid-round-card>

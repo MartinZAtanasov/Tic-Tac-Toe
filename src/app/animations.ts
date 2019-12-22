@@ -3,7 +3,6 @@ import { query, style, animate, group, transition, trigger, keyframes } from '@a
 
 export const popMark = trigger('popMark', [
     transition(':enter', [
-        style({transform: 'scale(0)'}),
         animate('.4s ease', keyframes([
             style({ transform: 'scale(0)', offset: 0}),
             style({ transform: 'scale(1.3)', offset: .33 }),
@@ -11,4 +10,17 @@ export const popMark = trigger('popMark', [
             style({ transform: 'scale(1)', offset: 1 }),
         ]))
     ])
-])
+]);
+
+export const modalPop = trigger('modalPop', [
+    transition(':enter', [
+        query('.modal', [
+            animate('1.2s ease', keyframes([
+                style({ transform: 'scale(0)', offset: 0}),
+                style({ transform: 'scale(1.3)', offset: .33 }),
+                style({ transform: 'scale(1)', offset: 0.66}),
+                style({ transform: 'scale(1)', offset: 1 }),
+            ]))
+        ]),
+    ])
+]);
