@@ -1,6 +1,6 @@
 import { ComputerFirstStrategiesService } from './../computer-first-strategies.service';
 import { GameStateService } from './../game-state.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from '../firebase.service';
 
@@ -24,6 +24,8 @@ export class MidRoundCardComponent implements OnInit, OnDestroy {
 
   savingResult = false;
   deletingResult = false;
+
+  @Output() finishGame: EventEmitter<void> = new EventEmitter();
 
   ngOnInit() {
     this.subscription = this.gameState.gameStatus.subscribe( game => {
@@ -49,7 +51,7 @@ export class MidRoundCardComponent implements OnInit, OnDestroy {
     this.savingResult = true;
     this.fireBase.saveResult().subscribe( res => {
       res
-      .then( () => this.savingResult = false)
+      .then( () => this.finishGame.emit())
       .catch( (err) => {
         this.savingResult = false;
         alert('Something went wrong: ' + err);
@@ -62,7 +64,7 @@ export class MidRoundCardComponent implements OnInit, OnDestroy {
     this.fireBase.deleteResult().subscribe( promises => {
       if (promises) {
         promises
-        .then( () => this.deletingResult = false)
+        .then( () => this.finishGame.emit())
         .catch( (err) => {
           this.deletingResult = false;
           alert('Something went wrong: ' + err);

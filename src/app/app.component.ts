@@ -18,8 +18,16 @@ export class AppComponent implements OnInit {
   user: Observable<firebase.User>;
   game: Observable<any>;
 
+  showRanking = false;
+  closableRanking = true;
+
   ngOnInit() {
     this.user = this.fireAuth.user;
     this.game = this.gameState.gameStatus;
+  }
+
+  finishGame() {
+    this.showRanking = true;
+    this.closableRanking = false;
   }
 }

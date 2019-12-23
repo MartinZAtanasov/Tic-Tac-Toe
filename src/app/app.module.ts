@@ -19,6 +19,7 @@ import { MidRoundCardComponent } from './mid-round-card/mid-round-card.component
 import { MiniBoardComponent } from './mini-board/mini-board.component';
 import { MiniBoxComponent } from './mini-box/mini-box.component';
 import { BtnSpinnerComponent } from './btn-spinner/btn-spinner.component';
+import { RankingModalComponent } from './ranking-modal/ranking-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { BtnSpinnerComponent } from './btn-spinner/btn-spinner.component';
     MidRoundCardComponent,
     MiniBoardComponent,
     MiniBoxComponent,
-    BtnSpinnerComponent
+    BtnSpinnerComponent,
+    RankingModalComponent
   ],
   imports: [
     BrowserModule,

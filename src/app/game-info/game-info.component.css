@@ -9,6 +9,7 @@
 img {
     width: 80px;
     margin: 0px 40px;
+    transition: .2s ease;
 }
 .logo {
     margin: 40px 0;
@@ -19,4 +20,11 @@ img {
 }
 img {
     border-radius: 50%;
+}
+
+@media only screen and (max-width: 550px) {
+    img {
+        width: 55px;
+        margin: 0px 10px;
+    }
 }

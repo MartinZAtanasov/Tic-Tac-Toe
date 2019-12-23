@@ -1,5 +1,5 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as firebase from 'firebase/app';
 
 @Component({
@@ -10,6 +10,8 @@ import * as firebase from 'firebase/app';
 export class AuthCardComponent implements OnInit {
 
   constructor(private fireAuth: AngularFireAuth) { }
+
+  @Output() showRanking: EventEmitter<void> = new EventEmitter();
 
   ngOnInit() {
   }
@@ -22,6 +24,10 @@ export class AuthCardComponent implements OnInit {
 
   guestLogin() {
     this.fireAuth.auth.signInAnonymously();
+  }
+
+  onShowRanking() {
+    this.showRanking.emit();
   }
 
 }

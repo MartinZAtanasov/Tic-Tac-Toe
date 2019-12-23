@@ -1,4 +1,5 @@
-<app-game-info *ngIf="(user | async)" ></app-game-info>
-<app-game-board *ngIf="(user | async)"></app-game-board>
-<app-auth-card *ngIf="!(user | async)"></app-auth-card>
-<app-mid-round-card *ngIf="!(game | async).gameOn && (user | async)" @modalPop></app-mid-round-card>
+<app-game-info *ngIf="(user | async) && !showRanking" ></app-game-info>
+<app-game-board *ngIf="(user | async) && !showRanking" @modalPop></app-game-board>
+<app-auth-card *ngIf="!(user | async) && !showRanking" (showRanking)="showRanking = true" @modalPop></app-auth-card>
+<app-mid-round-card *ngIf="!(game | async).gameOn && (user | async) && !showRanking" @modalPop (finishGame)="finishGame()"></app-mid-round-card>
+<app-ranking-modal *ngIf="showRanking" (closeRanking)="showRanking = false" @modalPop [closableRanking]="closableRanking"></app-ranking-modal>

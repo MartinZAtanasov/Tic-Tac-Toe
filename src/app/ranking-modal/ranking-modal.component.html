@@ -1,0 +1,19 @@
+<div class="modal">
+    <div class="modal-container">
+        <span (click)="onCloseRanking()" *ngIf="closableRanking">X</span>
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Player score</th>
+                <th>Computer score</th>
+            </tr>
+            <tr *ngFor="let user of (users | async)" class="record">
+                <td><img [src]="user.picture ? user.picture : 'assets/img/anonymous.png'" alt=""></td>
+                <td>{{user.name}}</td>
+                <td>{{user.playerScore}}</td>
+                <td>{{user.computerScore}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+
+span {
+    position: absolute;
+    content: 'X';
+    color: white;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    cursor: pointer;
+}

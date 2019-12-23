@@ -5,6 +5,7 @@ ul {
     overflow: hidden;
     list-style-type: none;
     margin: 20px auto;
+    transition: .2s ease;
 }
 
 li {
@@ -12,4 +13,12 @@ li {
     border: 2px solid white;
     height: 33.33%;
     float: left;
+}
+
+@media only screen and (max-width: 550px) {
+    ul {
+        width: 270px;
+        height: 270px;
+        margin: 10px auto;
+    }
 }

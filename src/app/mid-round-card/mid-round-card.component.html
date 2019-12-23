@@ -43,13 +43,15 @@
                 </div>
             </div>
 
-            <button (click)="onStartGame()" *ngIf="!game.computerScore">
-                Start Game
-            </button>
-
-            <button (click)="onNextRound()" *ngIf="game.computerScore">
-                Next Round
-            </button>
+            <div class="start-next-round">
+                <button (click)="onStartGame()" *ngIf="!game.computerScore">
+                    Start Game
+                </button>
+    
+                <button (click)="onNextRound()" *ngIf="game.computerScore">
+                    Next Round
+                </button>
+            </div>
 
             <div class="user-options" *ngIf="game.computerScore">
                 <button (click)="saveResult()" [disabled]="savingResult || deletingResult">

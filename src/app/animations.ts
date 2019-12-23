@@ -21,6 +21,6 @@ export const modalPop = trigger('modalPop', [
                 style({ transform: 'scale(1)', offset: 0.66}),
                 style({ transform: 'scale(1)', offset: 1 }),
             ]))
-        ]),
+        ], {optional: true}),
     ])
 ]);

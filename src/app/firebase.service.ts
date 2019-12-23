@@ -61,4 +61,14 @@ export class FirebaseService {
   private trimName(name: string): string {
     return name.split(' ')[0];
   }
+
+  getUsers(): Observable<any[]> {
+    return this.fireStore.collection('/users',  ref => ref.where('playerScore', '>', 0).orderBy('playerScore')).get().pipe(
+      map( users => {
+        const usersArr = [];
+        users.docs.forEach( user => usersArr.push(user.data()));
+        return usersArr.reverse();
+      })
+    );
+  }
 }
